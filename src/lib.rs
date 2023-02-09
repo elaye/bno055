@@ -479,6 +479,16 @@ where
         Ok(())
     }
 
+    pub fn interrupts(&mut self) -> Result<BNO055Interrupt, Error<E>> {
+        self.set_page(BNO055RegisterPage::PAGE_1)?;
+
+        let int = self.read_u8(regs::BNO055_INT_EN).map_err(Error::I2c)?;
+
+        let int = BNO055Interrupt::from_bits_truncate(int);
+
+        Ok(int)
+    }
+
     pub fn enable_interrupts(&mut self, interrupt: BNO055Interrupt) -> Result<(), Error<E>> {
         self.set_page(BNO055RegisterPage::PAGE_1)?;
 
@@ -486,6 +496,16 @@ where
             .map_err(Error::I2c)?;
 
         Ok(())
+    }
+
+    pub fn interrupts_mask(&mut self) -> Result<BNO055Interrupt, Error<E>> {
+        self.set_page(BNO055RegisterPage::PAGE_1)?;
+
+        let mask = self.read_u8(regs::BNO055_INT_MSK).map_err(Error::I2c)?;
+
+        let mask = BNO055Interrupt::from_bits_truncate(mask);
+
+        Ok(mask)
     }
 
     pub fn set_interrupts_mask(&mut self, interrupt: BNO055Interrupt) -> Result<(), Error<E>> {
