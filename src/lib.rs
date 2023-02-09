@@ -482,7 +482,7 @@ where
     pub fn enable_interrupts(&mut self, interrupt: BNO055Interrupt) -> Result<(), Error<E>> {
         self.set_page(BNO055RegisterPage::PAGE_1)?;
 
-        self.write_u8(regs::BNO055_SYS_TRIGGER, interrupt.bits())
+        self.write_u8(regs::BNO055_INT_EN, interrupt.bits())
             .map_err(Error::I2c)?;
 
         Ok(())
