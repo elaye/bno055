@@ -467,6 +467,36 @@ where
         Ok(self.mode.is_fusion_enabled())
     }
 
+    pub fn reset_interrupts(&mut self) -> Result<(), Error<E>> {
+        self.set_page(BNO055RegisterPage::PAGE_0)?;
+
+        self.write_u8(
+            regs::BNO055_SYS_TRIGGER,
+            regs::BNO055_SYS_TRIGGER_RST_INT_BIT,
+        )
+        .map_err(Error::I2c)?;
+
+        Ok(())
+    }
+
+    pub fn enable_interrupts(&mut self, interrupt: BNO055Interrupt) -> Result<(), Error<E>> {
+        self.set_page(BNO055RegisterPage::PAGE_1)?;
+
+        self.write_u8(regs::BNO055_SYS_TRIGGER, interrupt.bits())
+            .map_err(Error::I2c)?;
+
+        Ok(())
+    }
+
+    pub fn set_interrupts_mask(&mut self, interrupt: BNO055Interrupt) -> Result<(), Error<E>> {
+        self.set_page(BNO055RegisterPage::PAGE_1)?;
+
+        self.write_u8(regs::BNO055_INT_MSK, interrupt.bits())
+            .map_err(Error::I2c)?;
+
+        Ok(())
+    }
+
     pub fn get_acc_config(&mut self) -> Result<AccConfig, Error<E>> {
         self.set_page(BNO055RegisterPage::PAGE_1)?;
 
@@ -912,6 +942,19 @@ bitflags! {
         const M4G = 0b1010;
         const NDOF_FMC_OFF = 0b1011;
         const NDOF = 0b1100;
+    }
+}
+
+bitflags! {
+    pub struct BNO055Interrupt: u8 {
+        const ACC_NM = 0b10000000;
+        const ACC_AM = 0b01000000;
+        const ACC_HIGH_G = 0b00100000;
+        const GYR_DRDY = 0b00010000;
+        const GYR_HIGH_RATE = 0b00001000;
+        const GYRO_AM = 0b00000100;
+        const MAG_DRDY = 0b00000010;
+        const ACC_BSX_DRDY = 0b00000001;
     }
 }
 

@@ -85,13 +85,13 @@ pub(crate) const BNO055_PWR_MODE: u8 = 0x3E;
 
 pub(crate) const BNO055_SYS_TRIGGER: u8 = 0x3F;
 pub(crate) const BNO055_SYS_TRIGGER_RST_SYS_BIT: u8 = 0x20; // Reset command
+pub(crate) const BNO055_SYS_TRIGGER_RST_INT_BIT: u8 = 0b010_0000;
 pub(crate) const BNO055_SYS_TRIGGER_SELF_TEST_BIT: u8 = 0b000_0001; // Self-test command
 pub(crate) const BNO055_TEMP_SOURCE: u8 = 0x40;
 pub(crate) const BNO055_AXIS_MAP_CONFIG: u8 = 0x41;
 pub(crate) const BNO055_AXIS_MAP_SIGN: u8 = 0x42;
 
 /// Calibration data
-
 pub(crate) const BNO055_ACC_OFFSET_X_LSB: u8 = 0x55;
 pub(crate) const BNO055_ACC_OFFSET_X_MSB: u8 = 0x56;
 pub(crate) const BNO055_ACC_OFFSET_Y_LSB: u8 = 0x57;
@@ -117,6 +117,9 @@ pub(crate) const BNO055_ACC_RADIUS_LSB: u8 = 0x67;
 pub(crate) const BNO055_ACC_RADIUS_MSB: u8 = 0x68;
 pub(crate) const BNO055_MAG_RADIUS_LSB: u8 = 0x69;
 pub(crate) const BNO055_MAG_RADIUS_MSB: u8 = 0x6A;
+
+/// Interrupts
+pub(crate) const BNO055_INT_MSK: u8 = 0x0F;
 
 /// Sensor config
 pub(crate) const BNO055_ACC_CONFIG: u8 = 0x08;
