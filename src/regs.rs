@@ -120,6 +120,7 @@ pub(crate) const BNO055_MAG_RADIUS_MSB: u8 = 0x6A;
 
 /// Interrupts
 pub(crate) const BNO055_INT_MSK: u8 = 0x0F;
+pub(crate) const BNO055_INT_STA: u8 = 0x37;
 pub(crate) const BNO055_INT_EN: u8 = 0x10;
 
 /// Sensor config

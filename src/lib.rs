@@ -489,6 +489,16 @@ where
         Ok(int)
     }
 
+    pub fn interrupts_status(&mut self) -> Result<BNO055Interrupt, Error<E>> {
+        self.set_page(BNO055RegisterPage::PAGE_0)?;
+
+        let int = self.read_u8(regs::BNO055_INT_STA).map_err(Error::I2c)?;
+
+        let int = BNO055Interrupt::from_bits_truncate(int);
+
+        Ok(int)
+    }
+
     pub fn enable_interrupts(&mut self, interrupt: BNO055Interrupt) -> Result<(), Error<E>> {
         self.set_page(BNO055RegisterPage::PAGE_1)?;
 
